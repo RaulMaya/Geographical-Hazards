@@ -8,12 +8,20 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
   tileSize: 512,
   maxZoom: 18,
   zoomOffset: -1,
-  id: "mapbox/streets-v11",
+  id: "mapbox/light-v10",
   accessToken: API_KEY
 }).addTo(myMap);
 
 var link = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
 
 d3.json(link).then(function(data){
-    L.geoJson(data).addTo(myMap);
+    L.geoJson(data,{
+        style: function(feature){
+            return{
+                color:"red",
+                weight: 1.5,
+                type: "circle"
+            }
+        }
+    }).addTo(myMap);
 })

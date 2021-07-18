@@ -61,11 +61,14 @@ var tectonicPlates = "static/tectonicplates-master/tectonicplates-master/GeoJSON
 
     console.log(earthquakes)
 
-    var myMap = L.map("map",{
-      center: [26.41, 17.84],
-      zoom: 3
-    });
-    
+    d3.json(tectonicPlates).then(function (boundaries) {
+      // Creating a GeoJSON layer with the retrieved data
+      var plates = L.geoJson(boundaries, {
+          "color": '#0000FF',
+          "weight": 1,
+          "opacity": .75});
+      
+
     var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
       attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
       tileSize: 512,
@@ -103,10 +106,10 @@ var tectonicPlates = "static/tectonicplates-master/tectonicplates-master/GeoJSON
           });
 
           var baseMaps = {
-            "Satellite": satelliteMap,
-            "Outdoor": outdoorsMap,
-            "Light": lightMap,
-            "Dark": darkMap
+            "Satellite": satellitemap,
+            "Outdoor": outdoormap,
+            "Light": lightmap,
+            "Dark": darkmap
         };
 
         var overlayMaps = {
@@ -114,10 +117,20 @@ var tectonicPlates = "static/tectonicplates-master/tectonicplates-master/GeoJSON
           "Tectonic Plates": plates
       }
 
-        
-  
-
+      var myMap = L.map("map",{
+        center: [26.41, 17.84],
+        zoom: 3,
+        layers: [satellitemap, plates, earthquakes]
+      });
+      
+      L.control.layers(baseMaps, overlayMaps, {
+        collapsed: false
+    }).addTo(myMap);
+      
     earthquakes.addTo(myMap);
+    });
+
+   
 
     var legend = L.control({ position: 'bottomright' });
     legend.onAdd = function (map) {
@@ -140,6 +153,5 @@ var tectonicPlates = "static/tectonicplates-master/tectonicplates-master/GeoJSON
     };
 
     legend.addTo(myMap);
-  })
- 
- 
+    
+  });

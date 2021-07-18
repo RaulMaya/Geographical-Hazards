@@ -1,18 +1,3 @@
-var myMap = L.map("map",{
-  center: [26.41, 17.84],
-  zoom: 3
-});
-
-
-L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
-tileSize: 512,
-maxZoom: 18,
-zoomOffset: -1,
-id: "mapbox/light-v10",
-accessToken: API_KEY
-}).addTo(myMap);
-
 function getColor(d) {
   return d > 1000 ? '#800026' :
          d > 500  ? '#BD0026' :
@@ -49,7 +34,7 @@ link = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojs
         weight: 1,
         fillColor: getColor(depth),
         fillOpacity: 0.75
-    }).bindPopup(`<strong>Mag: ${mag}</strong><br><strong>&#x2022 Depth: </strong>${depth}`);
+    }).bindPopup(`Mag: ${mag} <br>Depth:${depth}`);
 
         markers.push(earthquakeMarker);
         mags.push(mag);

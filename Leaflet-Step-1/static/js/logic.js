@@ -1,11 +1,11 @@
 function getColor(d) {
-  return d > 90 ? '#800026' :
-         d > 70  ? '#BD0026' :
-         d > 60  ? '#E31A1C' :
-         d > 50  ? '#FC4E2A' :
-         d > 30   ? '#FD8D3C' :
-         d > 10   ? '#FEB24C' :
-         d > -10   ? '#FED976' :
+  return d > 600 ? '#800026' :
+         d > 500  ? '#BD0026' :
+         d > 400  ? '#E31A1C' :
+         d > 300  ? '#FC4E2A' :
+         d > 200   ? '#FD8D3C' :
+         d > 100   ? '#FEB24C' :
+         d > -5  ? '#FED976' :
                     '#FFEDA0';
 }
 
@@ -27,6 +27,7 @@ link = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojs
       var lat = property.geometry.coordinates[1];
       var lon = property.geometry.coordinates[0];
       var depth = property.geometry.coordinates[2];
+      var place = property.properties.place;
 
       var earthquakeMarker = L.circleMarker([lat, lon], {
         radius: mag * 3.5,
@@ -35,15 +36,21 @@ link = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojs
         weight: 1,
         fillColor: getColor(depth),
         fillOpacity: 0.75
-    }).bindPopup(`<b><u>Earthquake Details</u></b><hr><b>Magnitude:</b> ${mag} <br><b>Depth:</b> ${depth}<br><b>Coordinates:</b> (${lat},${lon})`);
+    }).bindPopup(`<b><u>Earthquake Details</u></b><hr><b>Magnitude:</b> ${mag} <br><b>Depth:</b> ${depth}<br><b>Coordinates:</b> (${lat},${lon})<br><b>Place:</b> ${place}`);
     
 
         markers.push(earthquakeMarker);
         mags.push(mag);
         depths.push(depth);
     })
+
+
+    var min = Math.min(depths)
+    var max = Math.max(depths);
+
+    console.log(min)
+    console.log(max)
     console.log(markers)
-    console.log(Math.max(mags[0]))
     console.log(depths)
 
     var earthquakes = L.layerGroup(markers)
@@ -71,8 +78,8 @@ link = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojs
     legend.onAdd = function (map) {
 
         var div = L.DomUtil.create('div', 'info legend'),
-            grades = [-10, 10, 30, 50, 60, 70, 90],
-            labels = ['<strong> Magnitude </strong>'],
+            grades = [-5, 100, 200, 300, 400, 500, 600],
+            labels = ['<strong> Depth </strong>'],
             from, to;
 
             for (var i = 0; i < grades.length; i++) {
@@ -88,5 +95,8 @@ link = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojs
     };
 
     legend.addTo(myMap);
+    console.log("Earthquake Magnitude [min/max]: ", Math.min(...mags), Math.max(...mags));   // DEBUG
+    console.log("Earthquake Depth [min/max]: ", Math.min(...depths), Math.max(...depths));
   })
+ 
  

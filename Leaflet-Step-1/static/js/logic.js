@@ -45,8 +45,8 @@ link = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojs
     })
 
 
-    var min = Math.min(depths)
-    var max = Math.max(depths);
+    var min = Math.min(...depths)
+    var max = Math.max(...depths);
 
     console.log(min)
     console.log(max)

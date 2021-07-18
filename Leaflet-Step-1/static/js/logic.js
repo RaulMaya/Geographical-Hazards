@@ -34,7 +34,8 @@ link = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojs
         weight: 1,
         fillColor: getColor(depth),
         fillOpacity: 0.75
-    }).bindPopup(`Mag: ${mag} <br>Depth:${depth}`);
+    }).bindPopup(`<b><u>Earthquake Details</u></b><hr><b>Magnitude:</b> ${mag} <br><b>Depth:</b> ${depth}<br><b>Coordinates:</b> (${lat},${lon})`);
+    
 
         markers.push(earthquakeMarker);
         mags.push(mag);

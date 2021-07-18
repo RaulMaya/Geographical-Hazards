@@ -10,9 +10,13 @@ function getColor(d) {
 }
 
 
-link = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
+var link = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
 
+var tectonicPlates = "static/tectonicplates-master/tectonicplates-master/GeoJSON/PB2002_boundaries.json"
 
+  d3.json(tectonicPlates).then(function(platesData){
+  console.log(platesData.features)
+  });
 
   d3.json(link).then(function(data){
     console.log(data.features)
@@ -62,15 +66,56 @@ link = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojs
       zoom: 3
     });
     
-    
-    L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-    attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
-    tileSize: 512,
-    maxZoom: 18,
-    zoomOffset: -1,
-    id: "mapbox/light-v10",
-    accessToken: API_KEY
-    }).addTo(myMap);
+    var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+      attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+      tileSize: 512,
+      maxZoom: 18,
+      zoomOffset: -1,
+      id: "mapbox/light-v10",
+      accessToken: API_KEY
+      });
+
+    var darkmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+      attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+      tileSize: 512,
+      maxZoom: 18,
+      zoomOffset: -1,
+      id: "mapbox/dark-v10",
+      accessToken: API_KEY
+      });
+
+      var outdoormap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+        attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+        tileSize: 512,
+        maxZoom: 18,
+        zoomOffset: -1,
+        id: "mapbox/outdoors-v11",
+        accessToken: API_KEY
+        });
+
+        var satellitemap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+          attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+          tileSize: 512,
+          maxZoom: 18,
+          zoomOffset: -1,
+          id: "mapbox/satellite-v9",
+          accessToken: API_KEY
+          });
+
+          var baseMaps = {
+            "Satellite": satelliteMap,
+            "Outdoor": outdoorsMap,
+            "Light": lightMap,
+            "Dark": darkMap
+        };
+
+        var overlayMaps = {
+          "Earthquakes": earthquakes,
+          "Tectonic Plates": plates
+      }
+
+        
+  
 
     earthquakes.addTo(myMap);
 

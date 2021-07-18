@@ -95,8 +95,6 @@ link = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojs
     };
 
     legend.addTo(myMap);
-    console.log("Earthquake Magnitude [min/max]: ", Math.min(...mags), Math.max(...mags));   // DEBUG
-    console.log("Earthquake Depth [min/max]: ", Math.min(...depths), Math.max(...depths));
   })
  
  

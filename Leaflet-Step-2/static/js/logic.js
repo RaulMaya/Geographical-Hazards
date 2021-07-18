@@ -62,10 +62,9 @@ var tectonicPlates = "static/tectonicplates-master/tectonicplates-master/GeoJSON
     console.log(earthquakes)
 
     d3.json(tectonicPlates).then(function (boundaries) {
-      // Creating a GeoJSON layer with the retrieved data
       var plates = L.geoJson(boundaries, {
-          "color": '#0000FF',
-          "weight": 1,
+          "color": "red",
+          "weight": 2,
           "opacity": .75});
       
 
@@ -120,18 +119,12 @@ var tectonicPlates = "static/tectonicplates-master/tectonicplates-master/GeoJSON
       var myMap = L.map("map",{
         center: [26.41, 17.84],
         zoom: 3,
-        layers: [satellitemap, plates, earthquakes]
+        layers: [darkmap, plates, earthquakes]
       });
       
       L.control.layers(baseMaps, overlayMaps, {
         collapsed: false
     }).addTo(myMap);
-      
-    earthquakes.addTo(myMap);
-    });
-
-   
-
     var legend = L.control({ position: 'bottomright' });
     legend.onAdd = function (map) {
 
@@ -153,5 +146,13 @@ var tectonicPlates = "static/tectonicplates-master/tectonicplates-master/GeoJSON
     };
 
     legend.addTo(myMap);
+    earthquakes.addTo(myMap);
+    });
+
+   
+
+
+
+    
     
   });

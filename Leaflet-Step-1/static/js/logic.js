@@ -1,13 +1,14 @@
 function getColor(d) {
-  return d > 1000 ? '#800026' :
-         d > 500  ? '#BD0026' :
-         d > 200  ? '#E31A1C' :
-         d > 100  ? '#FC4E2A' :
-         d > 50   ? '#FD8D3C' :
-         d > 20   ? '#FEB24C' :
-         d > 10   ? '#FED976' :
+  return d > 90 ? '#800026' :
+         d > 70  ? '#BD0026' :
+         d > 60  ? '#E31A1C' :
+         d > 50  ? '#FC4E2A' :
+         d > 30   ? '#FD8D3C' :
+         d > 10   ? '#FEB24C' :
+         d > -10   ? '#FED976' :
                     '#FFEDA0';
 }
+
 
 link = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
 
@@ -42,7 +43,7 @@ link = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojs
         depths.push(depth);
     })
     console.log(markers)
-    console.log(mags)
+    console.log(Math.max(mags[0]))
     console.log(depths)
 
     var earthquakes = L.layerGroup(markers)
@@ -66,6 +67,26 @@ link = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojs
 
     earthquakes.addTo(myMap);
 
-    
+    var legend = L.control({ position: 'bottomright' });
+    legend.onAdd = function (map) {
+
+        var div = L.DomUtil.create('div', 'info legend'),
+            grades = [-10, 10, 30, 50, 60, 70, 90],
+            labels = ['<strong> Magnitude </strong>'],
+            from, to;
+
+            for (var i = 0; i < grades.length; i++) {
+                from = grades [i];
+                to = grades[i+1]-1;
+        
+            labels.push(
+                '<i style="background:' + getColor(from + 1) + '"></i> ' +
+                from + (to ? '&ndash;' + to : '+'));
+                }
+                div.innerHTML = labels.join('<br>');
+                return div;
+    };
+
+    legend.addTo(myMap);
   })
  

@@ -39,7 +39,7 @@ var tectonicPlates = "static/tectonicplates-master/tectonicplates-master/GeoJSON
         color: "red",
         weight: 1,
         fillColor: getColor(depth),
-        fillOpacity: 0.75
+        fillOpacity: 0.9,
     }).bindPopup(`<b><u>Earthquake Details</u></b><hr><b>Magnitude:</b> ${mag} <br><b>Depth:</b> ${depth}<br><b>Coordinates:</b> (${lat},${lon})<br><b>Place:</b> ${place}`);
     
 
@@ -149,10 +149,4 @@ var tectonicPlates = "static/tectonicplates-master/tectonicplates-master/GeoJSON
     earthquakes.addTo(myMap);
     });
 
-   
-
-
-
-    
-    
   });

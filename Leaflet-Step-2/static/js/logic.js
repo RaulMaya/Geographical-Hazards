@@ -1,10 +1,10 @@
 function getColor(d) {
-  return d > 600 ? '#800026' :
+  return d > 600  ? '#800026' :
          d > 500  ? '#BD0026' :
          d > 400  ? '#E31A1C' :
          d > 300  ? '#FC4E2A' :
-         d > 200   ? '#FD8D3C' :
-         d > 100   ? '#FEB24C' :
+         d > 200  ? '#FD8D3C' :
+         d > 100  ? '#FEB24C' :
          d > -5  ? '#FED976' :
                     '#FFEDA0';
 }

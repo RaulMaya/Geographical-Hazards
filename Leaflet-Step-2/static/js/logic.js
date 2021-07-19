@@ -5,7 +5,7 @@ function getColor(d) {
          d > 300  ? '#FC4E2A' :
          d > 200  ? '#FD8D3C' :
          d > 100  ? '#FEB24C' :
-         d > -5  ? '#FED976' :
+         d > 0    ? '#FED976' :
                     '#FFEDA0';
 }
 
@@ -125,28 +125,30 @@ var tectonicPlates = "static/tectonicplates-master/tectonicplates-master/GeoJSON
       L.control.layers(baseMaps, overlayMaps, {
         collapsed: false
     }).addTo(myMap);
+
     var legend = L.control({ position: 'bottomright' });
     legend.onAdd = function (map) {
 
         var div = L.DomUtil.create('div', 'info legend'),
-            grades = [-5, 100, 200, 300, 400, 500, 600],
-            labels = ['<strong> Depth </strong>'],
+            grades = [0, 100, 200, 300, 400, 500, 600],
+            labels = ['<b> Depth </b>'],
             from, to;
 
             for (var i = 0; i < grades.length; i++) {
                 from = grades [i];
-                to = grades[i+1]-1;
+                to = grades[i+1];
         
             labels.push(
-                '<i style="background:' + getColor(from + 1) + '"></i> ' +
-                from + (to ? '&ndash;' + to : '+'));
-                }
-                div.innerHTML = labels.join('<br>');
-                return div;
+              '<i style="background:' + getColor(from) + '"></i> ' +
+              from + (to ? '&ndash;' + to : '+'));
+              }
+              div.innerHTML = labels.join('<br>');
+              return div;
     };
 
-    legend.addTo(myMap);
+    
     earthquakes.addTo(myMap);
+    legend.addTo(myMap);
     });
 
   });

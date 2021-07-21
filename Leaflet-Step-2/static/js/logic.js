@@ -116,7 +116,7 @@ var tectonicPlates = "static/tectonicplates-master/tectonicplates-master/GeoJSON
           "Tectonic Plates": plates
       }
 
-      var myMap = L.map("map",{
+      var myMap = L.map("map-id",{
         center: [26.41, 17.84],
         zoom: 3,
         layers: [darkmap, plates, earthquakes]
